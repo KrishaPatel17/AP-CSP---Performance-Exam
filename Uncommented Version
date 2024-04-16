@@ -1,0 +1,52 @@
+var letters = getColumn("American Sign Language Alphabet", "Letter");
+var pictures = getColumn("American Sign Language Alphabet", "Image");
+var phrase = getText("phrases");
+
+setScreen("openingScreen");
+
+onEvent("alphabetButton", "click", function() {
+  setScreen("aslScreen");
+});
+onEvent("phraseButton", "click", function() {
+  setScreen("wordsScreen");
+});
+onEvent("wordsButton", "click", function() {
+  setScreen("openingScreen");
+});
+
+onEvent("homeButton", "click", function() {
+  setScreen("openingScreen");
+});
+
+var gesture = {
+  "I love you": "iLoveYouImage",
+  "My name is": "myNameImage",
+  "Thank you": "thankYouImage",
+  "Help": "helpImage",
+  "Hello": "helloImage",
+  "Yes": "yesImage",
+  "No": "noImage",
+  "Please": "pleaseImage",
+  "Sorry": "sorryImage",
+  "Stop": "stopImage",
+  "Bathroom": "bathroomImage"
+};
+
+onEvent("phrases", "change", function() {
+  phrase = getText("phrases");
+
+  for (var key in gesture) {
+    if (phrase === key) {
+      showElement(gesture[key]);
+    } else {
+      hideElement(gesture[key]);
+    }
+  }
+});
+
+onEvent("inputLetter", "change", function() {
+  var inputValue = getText("inputLetter").toUpperCase();
+  var index = letters.indexOf(inputValue);
+
+  if (index !== -1) {
+    setImageURL("handImage", pictures[index]);
