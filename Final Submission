@@ -1,0 +1,73 @@
+//Setting up the variables
+var letters = getColumn("American Sign Language Alphabet", "Letter");
+var pictures = getColumn("American Sign Language Alphabet", "Image");
+var phrase = getText("phrases");
+
+//Sets the screen to the opening screen when the user opens the application
+setScreen("openingScreen");
+
+//Home to letter to sign converter screen
+onEvent("alphabetButton", "click", function() {
+  setScreen("aslScreen");
+});
+//Home to phrases screen
+onEvent("phraseButton", "click", function() {
+  setScreen("wordsScreen");
+});
+//Letter to sign converter back to home button
+onEvent("wordsButton", "click", function() {
+  setScreen("openingScreen");
+});
+
+//Home button
+onEvent("homeButton", "click", function() {
+  setScreen("openingScreen");
+});
+
+//Define an object to match the phrases to their corresponding gesture images
+var gesture = {
+  "I love you": "iLoveYouImage",
+  "My name is": "myNameImage",
+  "Thank you": "thankYouImage",
+  "Help": "helpImage",
+  "Hello": "helloImage",
+  "Yes": "yesImage",
+  "No": "noImage",
+  "Please": "pleaseImage",
+  "Sorry": "sorryImage",
+  "Stop": "stopImage",
+  "Bathroom": "bathroomImage"
+};
+
+//Get the user's phrase option.  
+onEvent("phrases", "change", function() {
+  phrase = getText("phrases");
+
+//Iterate over the keys in the gesture object
+  for (var key in gesture) {
+// Check if the current phrase matches any key in the object
+    if (phrase === key) {
+//Show the corresponding gesture image
+      showElement(gesture[key]);
+    } else {
+//Hide the gesture image if the phrase doesn't match
+      hideElement(gesture[key]);
+    }
+  }
+});
+
+//Get the user's alphabet option
+onEvent("inputLetter", "change", function() {
+//Convert input to uppercase
+  var inputValue = getText("inputLetter").toUpperCase();
+  var index = letters.indexOf(inputValue);
+
+//Find the index of the input letter
+  if (index !== -1) {
+    // Set the image based on the index
+    setImageURL("handImage", pictures[index]);
+  } else {
+//Display error image since input is not found
+    setImageURL("handImage", "https://www.freeiconspng.com/uploads/exclamation-point-error-simple-black-background-pictures-18.png");
+  }
+});
