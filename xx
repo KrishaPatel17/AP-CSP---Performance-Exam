@@ -1,5 +1,4 @@
 function showASLGesture(phrase) {
-  // Iterate through the gestures
   for (var key in gesture) {
     if (phrase === key) {
       showElement(gesture[key]);
